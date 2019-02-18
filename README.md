@@ -15,7 +15,7 @@
 ```
 [ZXRequestBlock disableHttpProxy];
 ```
-### 启用HTTPDNS（将会直接从本地或http://119.29.29.29进行DNS解析，是一种避免DNS劫持的措施）
+### 启用HTTPDNS（将会直接从本地或http://119.29.29.29 进行DNS解析，是一种避免DNS劫持的措施）
 ```
 [ZXRequestBlock enableHttpDns];
 ```
