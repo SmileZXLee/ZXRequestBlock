@@ -1,6 +1,6 @@
 # ZXRequestBlock
 ### 拦截全局请求
-```
+```objective-c
 [ZXRequestBlock handleRequest:^NSURLRequest *(NSURLRequest *request) {
         //拦截回调在异步线程
         NSLog(@"拦截到请求-%@",request);
@@ -12,11 +12,11 @@
 }];
 ```
 ### 禁止网络代理（若当前处于代理网络下，无论是手机全局VPN还是WiFi代理，都将禁止当前应用的所有网络请求，一般用于防抓包，改包等，有利有弊）
-```
+```objective-c
 [ZXRequestBlock disableHttpProxy];
 ```
 ### 启用HTTPDNS（将会直接从本地或http://119.29.29.29 进行DNS解析，是一种避免DNS劫持的措施）
-```
+```objective-c
 [ZXRequestBlock enableHttpDns];
 ```
 
