@@ -11,7 +11,7 @@
         return request;
 }];
 ```
-### 禁止网络代理（若当前处于代理网络下，无论是手机全局VPN还是WiFi代理，都将禁止当前应用的所有网络请求，一般用于防抓包，改包等，有利有弊）
+### 禁止网络代理（一般用于防抓包，改包等）
 ```objective-c
 [ZXRequestBlock disableHttpProxy];
 ```
@@ -19,6 +19,8 @@
 ```objective-c
 [ZXRequestBlock enableHttpDns];
 ```
+### Demo演示
+<img src="https://github.com/SmileZXLee/ZXRequestBlock/blob/master/DemoImg/ZXRequestBlockDemo.gif?raw=true"/>
 
 
 
