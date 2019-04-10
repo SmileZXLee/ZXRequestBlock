@@ -9,13 +9,13 @@
 #import "ZXRequestBlock.h"
 #import "ZXURLProtocol.h"
 #import "ZXHttpIPGet.h"
+#import "NSURLSession+ZXHttpProxy.h"
 static BOOL isCancelAllReq;
 @interface ZXRequestBlock()
 @end
 @implementation ZXRequestBlock
 +(void)load{
     [super load];
-    [self addRequestBlock];
 }
 +(void)addRequestBlock{
     [NSURLProtocol registerClass:[ZXURLProtocol class]];
@@ -24,6 +24,7 @@ static BOOL isCancelAllReq;
     [NSURLProtocol unregisterClass:[ZXURLProtocol class]];
 }
 +(void)handleRequest:(requestBlock)block{
+    [self addRequestBlock];
     [ZXURLProtocol sharedInstance].requestBlock = ^NSURLRequest *(NSURLRequest *request) {
         return block(request);
     };
@@ -53,9 +54,7 @@ static BOOL isCancelAllReq;
 }
 +(id)disableHttpProxy{
     id httpProxy = [self fetchHttpProxy];
-    if(httpProxy){
-        [self cancelAllRequest];
-    }
+    [NSURLSession disableHttpProxy];
     return httpProxy;
 }
 +(void)enableHttpDns{

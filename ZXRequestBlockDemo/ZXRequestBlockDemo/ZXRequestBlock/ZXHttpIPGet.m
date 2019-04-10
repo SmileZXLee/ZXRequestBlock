@@ -32,11 +32,9 @@
     }
     bResolved = result == TRUE ? true : false;
     
-    if(bResolved)
-    {
+    if(bResolved){
         struct sockaddr_in* remoteAddr;
-        for(int i = 0; i < CFArrayGetCount(addresses); i++)
-        {
+        for(int i = 0; i < CFArrayGetCount(addresses); i++){
             CFDataRef saData = (CFDataRef)CFArrayGetValueAtIndex(addresses, i);
             remoteAddr = (struct sockaddr_in*)CFDataGetBytePtr(saData);
             
@@ -59,7 +57,7 @@
     urlStr = [[urlStr stringByReplacingOccurrencesOfString:@"http://" withString:@""]stringByReplacingOccurrencesOfString:@"https://" withString:@""];
     NSString *dnsUrl = [NSString stringWithFormat:@"http://119.29.29.29/d?ttl=1&dn=%@",urlStr];
     NSMutableURLRequest * dnsRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:dnsUrl] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    NSData * data = [NSURLConnection sendSynchronousRequest:dnsRequest returningResponse:nil error:nil];
+    NSData *data = [NSURLConnection sendSynchronousRequest:dnsRequest returningResponse:nil error:nil];
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 @end

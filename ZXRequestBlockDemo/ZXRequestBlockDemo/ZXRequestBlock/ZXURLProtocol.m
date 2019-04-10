@@ -12,7 +12,7 @@
 @property (nonatomic, strong) NSURLSession * session;
 @end
 @implementation ZXURLProtocol
-+ (instancetype)sharedInstance {
++(instancetype)sharedInstance {
     static ZXURLProtocol *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -22,7 +22,7 @@
     });
     return sharedInstance;
 }
-+ (BOOL)canInitWithRequest:(NSURLRequest *)request {
++(BOOL)canInitWithRequest:(NSURLRequest *)request {
     
     if ([NSURLProtocol propertyForKey:protocolKey inRequest:request]) {
         return NO;
@@ -30,14 +30,8 @@
     NSString * url = request.URL.absoluteString;
     return [self isUrl:url];
 }
-+ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
-    
-    //    // 修改了请求的头部信息
-//        NSMutableURLRequest * mutableReq = [request mutableCopy];
-//        NSMutableDictionary * headers = [mutableReq.allHTTPHeaderFields mutableCopy];
-    //NSURL *URL = request.URL;
++(NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
     return [[ZXURLProtocol sharedInstance] requestBlockForRequst:request];
-    
 }
 -(NSURLRequest *)requestBlockForRequst:(NSURLRequest *)request{
     if(self.requestBlock){
@@ -46,7 +40,7 @@
         return request;
     }
 }
-- (void)startLoading {
+-(void)startLoading {
     NSMutableURLRequest * request = [self.request mutableCopy];
     [NSURLProtocol setProperty:@(YES) forKey:protocolKey inRequest:request];
     NSURLSessionConfiguration * config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -55,7 +49,7 @@
     [task resume];
 }
 
-- (void)stopLoading {
+-(void)stopLoading {
     [self.session invalidateAndCancel];
     self.session = nil;
 }

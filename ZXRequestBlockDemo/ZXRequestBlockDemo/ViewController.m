@@ -35,33 +35,9 @@
         });
         return request;
     }];
-    
-    
-//    [ZXRequestBlock handleRequest:^NSURLRequest *(NSURLRequest *request) {
-//        NSLog(@"拦截到请求-%@",request);
-//        NSMutableURLRequest * mutableReq = [request mutableCopy];
-//        NSMutableDictionary * headers = [mutableReq.allHTTPHeaderFields mutableCopy];
-//        mutableReq.URL = [NSURL URLWithString:@"http://jwgl.fafu.edu.cn"];
-//        return mutableReq;
-//    }];
-    //[ZXRequestBlock enableHttpDns];
+
     [self reqMethodAction:self.reqMethodSeg];
     self.reqListTv.text = [self.reqListTv.text stringByAppendingString:@"\n"];
-//    NSString *ipstr = [ZXHttpIPGet getIPArrFromLocalDnsWithUrlStr:@"http://manage.unioncity.com.cn"];
-//    NSString *dnsUrl = [NSString stringWithFormat:@"http://119.29.29.29/d?ttl=1&dn=%@",@"www.baidu.com"];
-//    NSURL *url = [NSURL URLWithString:dnsUrl];
-//    NSMutableURLRequest *mr = [NSMutableURLRequest requestWithURL:url];
-//    mr.HTTPMethod = @"GET";
-//    mr.timeoutInterval = 10;
-//    [NSURLConnection sendAsynchronousRequest:mr queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-//        if (connectionError) {
-//            NSLog(@"connectionError-%@",connectionError);
-//            return;
-//        }
-//        NSString *responseStr = [[NSString alloc]initWithData:data encoding:kCFStringEncodingUTF8];
-//        NSLog(@"请求成功--%@",responseStr);
-//    }];
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (IBAction)enableHttpDnsAction:(id)sender {
@@ -78,13 +54,10 @@
 }
 - (IBAction)enableHttpProxy:(id)sender {
     UIButton *curBtn = (UIButton *)sender;
-    if([curBtn.currentTitle isEqualToString:@"允许代理网络"]){
-        [curBtn setTitle:@"禁用代理网络" forState:UIControlStateNormal];
+    if([curBtn.currentTitle isEqualToString:@"禁止代理网络"]){
+        [curBtn setTitle:@"已禁止代理网络" forState:UIControlStateNormal];
         curBtn.backgroundColor = [UIColor redColor];
         [ZXRequestBlock disableHttpProxy];
-    }else{
-        [curBtn setTitle:@"允许代理网络" forState:UIControlStateNormal];
-        curBtn.backgroundColor = [UIColor colorWithRed:72/255.0 green:185/255.0 blue:34/255.0 alpha:1];
     }
 }
 - (IBAction)sendReqAction:(id)sender {

@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 @interface ZXURLProtocol : NSURLProtocol
 @property (nonatomic, copy) NSURLRequest *(^requestBlock)(NSURLRequest *request);
-+ (instancetype)sharedInstance;
++(instancetype)sharedInstance;
 @end
