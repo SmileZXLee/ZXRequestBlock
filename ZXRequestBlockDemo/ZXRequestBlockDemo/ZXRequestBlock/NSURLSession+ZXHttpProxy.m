@@ -7,11 +7,13 @@
 //
 
 #import "NSURLSession+ZXHttpProxy.h"
+#import "ZXURLProtocol.h"
 #import <objc/runtime.h>
 @implementation NSURLSession (ZXHttpProxy)
 +(void)disableHttpProxy{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        [NSURLProtocol registerClass:[ZXURLProtocol class]];
         Class class = [NSURLSession class];
         [self swizzingMethodWithClass:class orgSel:NSSelectorFromString(@"sessionWithConfiguration:") swiSel:NSSelectorFromString(@"zx_sessionWithConfiguration:")];
         [self swizzingMethodWithClass:class orgSel:NSSelectorFromString(@"sessionWithConfiguration:delegate:delegateQueue:") swiSel:NSSelectorFromString(@"zx_sessionWithConfiguration:delegate:delegateQueue:")];
