@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		744AA9EA2355AC0300322757 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 744AA9E82355AC0200322757 /* MBProgressHUD.m */; };
 		74592FDD2131B32100690410 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 74592FDC2131B32100690410 /* AppDelegate.m */; };
 		74592FE02131B32100690410 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74592FDF2131B32100690410 /* ViewController.m */; };
 		74592FE32131B32100690410 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74592FE12131B32100690410 /* Main.storyboard */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		744AA9E82355AC0200322757 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		744AA9E92355AC0200322757 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		74592FD82131B32100690410 /* ZXRequestBlockDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXRequestBlockDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74592FDB2131B32100690410 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		74592FDC2131B32100690410 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -90,6 +93,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		744AA9E62355AC0200322757 /* ThirdParty(第三方) */ = {
+			isa = PBXGroup;
+			children = (
+				744AA9E72355AC0200322757 /* MBProgressHUD */,
+			);
+			path = "ThirdParty(第三方)";
+			sourceTree = "<group>";
+		};
+		744AA9E72355AC0200322757 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				744AA9E92355AC0200322757 /* MBProgressHUD.h */,
+				744AA9E82355AC0200322757 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		74592FCF2131B32100690410 = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +138,7 @@
 				74592FDC2131B32100690410 /* AppDelegate.m */,
 				74592FDE2131B32100690410 /* ViewController.h */,
 				74592FDF2131B32100690410 /* ViewController.m */,
+				744AA9E62355AC0200322757 /* ThirdParty(第三方) */,
 				74592FE12131B32100690410 /* Main.storyboard */,
 				74592FE42131B32100690410 /* Assets.xcassets */,
 				74592FE62131B32100690410 /* LaunchScreen.storyboard */,
@@ -300,6 +321,7 @@
 				74C3B63D225DAF6500B4332A /* NSURLSession+ZXHttpProxy.m in Sources */,
 				74592FEB2131B32100690410 /* main.m in Sources */,
 				74592FDD2131B32100690410 /* AppDelegate.m in Sources */,
+				744AA9EA2355AC0300322757 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

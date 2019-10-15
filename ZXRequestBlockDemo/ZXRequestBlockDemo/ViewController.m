@@ -7,8 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "MBProgressHUD.h"
 #import "ZXRequestBlock.h"
-#import "ZXHttpIPGet.h"
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UISegmentedControl *reqMethodSeg;
 @property (weak, nonatomic) IBOutlet UITextField *reqUrlTf;
@@ -135,7 +135,9 @@
         mr.HTTPBody = [self.bodyTv.text dataUsingEncoding:NSUTF8StringEncoding];
     }
     mr.timeoutInterval = 10;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [NSURLConnection sendAsynchronousRequest:mr queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (connectionError) {
             self.reqListTv.text = [self.reqListTv.text stringByAppendingString:[NSString stringWithFormat:@"请求失败--%@\n",connectionError]];
             NSLog(@"请求失败--%@",connectionError);
