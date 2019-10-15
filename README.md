@@ -31,16 +31,32 @@ pod 'ZXRequestBlock'
         return request;
 }];
 ```
-### 禁止网络代理（一般用于防抓包，改包等）
+### 禁止网络代理抓包(开启后将无法通过网络代理抓包，通过Thor，Charles，Burp等均无法抓取此App的包，且在代理网络下App内部请求不受任何影响)
 ```objective-c
 [ZXRequestBlock disableHttpProxy];
+```
+### 允许网络代理抓包【默认为允许】
+```objective-c
+[ZXRequestBlock enableHttpProxy];
 ```
 ### 启用HTTPDNS（将会直接从本地或http://119.29.29.29 进行DNS解析，是一种避免DNS劫持的措施）
 ```objective-c
 [ZXRequestBlock enableHttpDns];
 ```
-### Demo演示
-<img src="https://github.com/SmileZXLee/ZXRequestBlock/blob/master/DemoImg/ZXRequestBlockDemo.gif?raw=true"/>
+### 关闭HTTPDNS【默认为关闭】
+```objective-c
+[ZXRequestBlock disableHttpDns];
+```
+### 禁止所有网络请求
+```objective-c
+[ZXRequestBlock cancelAllRequest];
+```
+### 恢复所有网络请求
+```objective-c
+[ZXRequestBlock resumeAllRequest];
+```
+### 防抓包Demo演示
+<img src="http://www.zxlee.cn/ZXRequestBlockDemo1.gif"/>
 
 
 
