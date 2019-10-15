@@ -16,13 +16,13 @@
     static ZXURLProtocol *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (!sharedInstance) {
+        if (!sharedInstance){
             sharedInstance = [[self alloc] init];
         }
     });
     return sharedInstance;
 }
-+(BOOL)canInitWithRequest:(NSURLRequest *)request {
++(BOOL)canInitWithRequest:(NSURLRequest *)request{
     
     if ([NSURLProtocol propertyForKey:protocolKey inRequest:request]) {
         return NO;
@@ -40,7 +40,7 @@
         return request;
     }
 }
--(void)startLoading {
+-(void)startLoading{
     NSMutableURLRequest * request = [self.request mutableCopy];
     [NSURLProtocol setProperty:@(YES) forKey:protocolKey inRequest:request];
     NSURLSessionConfiguration * config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -55,8 +55,7 @@
 }
 
 #pragma mark - NSURLSessionDataDelegate
--(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
-{
+-(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
     if (error) {
         [self.client URLProtocol:self didFailWithError:error];
     } else {
@@ -64,21 +63,18 @@
     }
 }
 
--(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
-{
+-(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler{
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
     completionHandler(NSURLSessionResponseAllow);
 }
 
--(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
-{
+-(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data{
     [self.client URLProtocol:self didLoadData:data];
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
  willCacheResponse:(NSCachedURLResponse *)proposedResponse
- completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler
-{
+ completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler{
     completionHandler(proposedResponse);
 }
 +(BOOL)isUrl:(NSString *)url{

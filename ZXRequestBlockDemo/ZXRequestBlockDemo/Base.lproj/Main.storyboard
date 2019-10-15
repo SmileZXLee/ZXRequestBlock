@@ -219,7 +219,7 @@
                                                     <action selector="reqMethodAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="ZTT-qM-bS8"/>
                                                 </connections>
                                             </segmentedControl>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://www.baidu.com" borderStyle="roundedRect" placeholder="输入目标网址" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8wB-fJ-KTy">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://api.ifafu.cn/public/text/firstWeek?t=0" borderStyle="roundedRect" placeholder="输入目标网址" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8wB-fJ-KTy">
                                                 <rect key="frame" x="99" y="36" width="206" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>

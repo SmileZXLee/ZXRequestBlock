@@ -37,9 +37,7 @@
         for(int i = 0; i < CFArrayGetCount(addresses); i++){
             CFDataRef saData = (CFDataRef)CFArrayGetValueAtIndex(addresses, i);
             remoteAddr = (struct sockaddr_in*)CFDataGetBytePtr(saData);
-            
-            if(remoteAddr != NULL)
-            {
+            if(remoteAddr != NULL){
                 char ip[16];
                 strcpy(ip, inet_ntoa(remoteAddr->sin_addr));
                 NSString * ipStr = [NSString stringWithCString:ip encoding:NSUTF8StringEncoding];
