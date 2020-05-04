@@ -17,6 +17,12 @@ pod 'ZXRequestBlock'
 ```
 ***
 
+## 注意
+
+### 不支持WKWebView！！
+
+***
+
 ## 使用方法
 
 ### 拦截全局请求
