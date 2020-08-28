@@ -7,6 +7,7 @@
 //
 
 #import "ZXRequestBlock.h"
+#import <objc/runtime.h>
 #import "ZXURLProtocol.h"
 #import "ZXHttpIPGet.h"
 #import "NSURLSession+ZXHttpProxy.h"
@@ -15,6 +16,7 @@ static BOOL isEnableHttpDns;
 
 @implementation ZXRequestBlock
 +(void)addRequestBlock{
+    [self injectNSURLSessionConfiguration];
     [NSURLProtocol registerClass:[ZXURLProtocol class]];
 }
 +(void)removeRequestBlock{
@@ -109,4 +111,20 @@ static BOOL isEnableHttpDns;
     NSString *proxy = (__bridge NSString *)proxyCFstr;
     return proxy;
 }
+
+///来源：https://www.jianshu.com/p/25f2d36eb637 ，感谢！！
++ (void)injectNSURLSessionConfiguration{
+    Class cls = NSClassFromString(@"__NSCFURLSessionConfiguration") ?: NSClassFromString(@"NSURLSessionConfiguration");
+    Method originalMethod = class_getInstanceMethod(cls, @selector(protocolClasses));
+    Method stubMethod = class_getInstanceMethod([self class], @selector(protocolClasses));
+    if (!originalMethod || !stubMethod) {
+        [NSException raise:NSInternalInconsistencyException format:@"Couldn't load NEURLSessionConfiguration."];
+    }
+    method_exchangeImplementations(originalMethod, stubMethod);
+}
+
+- (NSArray *)protocolClasses{
+    return @[[ZXURLProtocol class]];
+}
+
 @end
