@@ -37,6 +37,21 @@
         });
         return request;
     }];
+    
+    /*
+    //拦截请求与响应
+    [ZXRequestBlock handleRequest:^NSURLRequest *(NSURLRequest *request) {
+        return request;
+    } responseBlock:^NSData *(NSURLResponse *response, NSData *data) {
+        //如果为http请求，则响应为NSHTTPURLResponse，可进行强制转换
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        NSLog(@"拦截到响应url-%@", httpResponse.URL);
+        NSLog(@"拦截到响应数据-%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+        //这里返回的data就是最终的响应数据，可以自行修改
+        //可以通过[str dataUsingEncoding:NSUTF8StringEncoding];来将字符串转NSData
+        return data;
+    }];
+    */
 }
 #pragma mark - Actions
 #pragma mark 启用/禁用httpDNS
@@ -156,6 +171,14 @@
     self.blockTv.editable = NO;
     [self reqMethodAction:self.reqMethodSeg];
     self.reqListTv.text = [self.reqListTv.text stringByAppendingString:@"\n"];
+    
+    
+    if (@available(iOS 15.0, *)) {
+       UINavigationBarAppearance *appperance = [[UINavigationBarAppearance alloc]init];
+       appperance.backgroundColor = [UIColor whiteColor];
+       self.navigationController.navigationBar.standardAppearance = appperance;
+       self.navigationController.navigationBar.scrollEdgeAppearance = appperance;
+    }
 }
 
 

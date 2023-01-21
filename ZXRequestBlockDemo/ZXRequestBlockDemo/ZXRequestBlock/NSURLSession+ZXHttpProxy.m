@@ -1,10 +1,11 @@
 //
 //  NSURLSession+ZXHttpProxy.m
-//  ZXRequestBlockDemo
+//  ZXRequestBlock
 //
 //  Created by 李兆祥 on 2019/4/10.
 //  Copyright © 2019 李兆祥. All rights reserved.
-//
+//  https://github.com/SmileZXLee/ZXRequestBlock
+//  V1.0.3
 
 #import "NSURLSession+ZXHttpProxy.h"
 #import "ZXURLProtocol.h"

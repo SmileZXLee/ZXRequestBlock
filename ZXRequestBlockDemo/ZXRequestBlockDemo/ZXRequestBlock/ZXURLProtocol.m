@@ -1,15 +1,17 @@
 //
 //  ZXURLProtocol.m
-//  ZXRequestBlockDemo
+//  ZXRequestBlock
 //
 //  Created by 李兆祥 on 2018/8/26.
 //  Copyright © 2018年 李兆祥. All rights reserved.
-//
+//  https://github.com/SmileZXLee/ZXRequestBlock
+//  V1.0.3
 
 #import "ZXURLProtocol.h"
 #define protocolKey @"SessionProtocolKey"
 @interface ZXURLProtocol()<NSURLSessionDataDelegate>
-@property (nonatomic, strong) NSURLSession * session;
+@property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) NSURLResponse *currentResponse;
 @end
 @implementation ZXURLProtocol
 +(instancetype)sharedInstance {
@@ -23,7 +25,6 @@
     return sharedInstance;
 }
 +(BOOL)canInitWithRequest:(NSURLRequest *)request{
-    
     if ([NSURLProtocol propertyForKey:protocolKey inRequest:request]) {
         return NO;
     }
@@ -34,18 +35,15 @@
     return [[ZXURLProtocol sharedInstance] requestBlockForRequst:request];
 }
 -(NSURLRequest *)requestBlockForRequst:(NSURLRequest *)request{
-    if(self.requestBlock){
-        return self.requestBlock(request);
-    }else{
-        return request;
-    }
+    NSURLRequest *currentRequest = self.requestBlock ? self.requestBlock(request) : request;
+    return currentRequest;
 }
 -(void)startLoading{
-    NSMutableURLRequest * request = [self.request mutableCopy];
+    NSMutableURLRequest *request = [self.request mutableCopy];
     [NSURLProtocol setProperty:@(YES) forKey:protocolKey inRequest:request];
-    NSURLSessionConfiguration * config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-    NSURLSessionDataTask * task = [self.session dataTaskWithRequest:request];
+    NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request];
     [task resume];
 }
 
@@ -65,11 +63,13 @@
 
 -(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler{
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+    self.currentResponse = response;
     completionHandler(NSURLSessionResponseAllow);
 }
 
 -(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data{
-    [self.client URLProtocol:self didLoadData:data];
+    NSData *currentData = [ZXURLProtocol sharedInstance].responseBlock ? [ZXURLProtocol sharedInstance].responseBlock(self.currentResponse, data) : data;
+    [self.client URLProtocol:self didLoadData:currentData];
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask

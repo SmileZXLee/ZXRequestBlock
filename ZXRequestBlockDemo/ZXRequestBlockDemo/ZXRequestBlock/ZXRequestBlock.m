@@ -1,10 +1,11 @@
 //
 //  ZXRequestBlock.m
-//  ZXRequestBlockDemo
+//  ZXRequestBlock
 //
 //  Created by 李兆祥 on 2018/8/25.
 //  Copyright © 2018年 李兆祥. All rights reserved.
-//
+//  https://github.com/SmileZXLee/ZXRequestBlock
+//  V1.0.3
 
 #import "ZXRequestBlock.h"
 #import <objc/runtime.h>
@@ -22,14 +23,18 @@ static BOOL isEnableHttpDns;
 +(void)removeRequestBlock{
     [NSURLProtocol unregisterClass:[ZXURLProtocol class]];
 }
-+(void)handleRequest:(requestBlock)block{
-    NSAssert(![ZXURLProtocol sharedInstance].requestBlock, @"您已添加过handleRequest，再次添加会导致之前代码设置的handleRequest失效，请更改设计策略，在同一个handleRequestBlock作统一处理！");
++(void)handleRequest:(requestBlock)requestBlock{
+    [self handleRequest:requestBlock responseBlock:nil];
+}
++(void)handleRequest:(requestBlock)requestBlock responseBlock:(responseBlock)responseBlock{
+    ZXURLProtocol *urlProtocol = [ZXURLProtocol sharedInstance];
+    NSAssert(!urlProtocol.requestBlock, @"您已添加过handleRequest，再次添加会导致之前代码设置的handleRequest失效，请更改设计策略，在同一个handleRequestBlock作统一处理！");
     [self addRequestBlock];
-    [ZXURLProtocol sharedInstance].requestBlock = ^NSURLRequest *(NSURLRequest *request) {
+    urlProtocol.requestBlock = ^NSURLRequest *(NSURLRequest *request) {
         if(isCancelAllReq){
             return nil;
         }
-        NSURLRequest *newRequest = block(request);
+        NSURLRequest *newRequest = requestBlock(request);
         if(isEnableHttpDns){
             NSString *handleUrlStr = request.URL.absoluteString;
             if([self isValidIP:handleUrlStr]){
@@ -42,6 +47,7 @@ static BOOL isEnableHttpDns;
         }
         return newRequest;
     };
+    urlProtocol.responseBlock = responseBlock;
 }
 +(void)disableRequestWithUrlStr:(NSString *)urlStr{
     [self handleRequest:^NSURLRequest *(NSURLRequest *request) {
