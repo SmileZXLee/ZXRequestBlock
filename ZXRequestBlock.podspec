@@ -9,4 +9,10 @@ s.platform     = :ios, '8.0'
 s.source       = {:git => 'https://github.com/SmileZXLee/ZXRequestBlock.git', :tag => s.version}
 s.source_files = 'ZXRequestBlockDemo/ZXRequestBlockDemo/ZXRequestBlock/**/*'
 s.requires_arc = true
+s.user_target_xcconfig = {
+    'GENERATE_INFOPLIST_FILE' => 'YES'
+}
+s.pod_target_xcconfig = {
+    'GENERATE_INFOPLIST_FILE' => 'YES'
+}
 end
