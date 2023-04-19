@@ -32,7 +32,7 @@ static BOOL isDisableHttpProxy = NO;
                                     delegate:(nullable id<NSURLSessionDelegate>)delegate
                                delegateQueue:(nullable NSOperationQueue *)queue{
     if (!configuration){
-        configuration = [[NSURLSessionConfiguration alloc] init];
+        configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     }
     if(isDisableHttpProxy){
         configuration.connectionProxyDictionary = @{};
