@@ -5,7 +5,7 @@
 //  Created by 李兆祥 on 2018/8/26.
 //  Copyright © 2018年 李兆祥. All rights reserved.
 //  https://github.com/SmileZXLee/ZXRequestBlock
-//  V1.0.3
+//  V1.0.4
 
 #import "ZXURLProtocol.h"
 #define protocolKey @"SessionProtocolKey"
@@ -24,25 +24,25 @@
     });
     return sharedInstance;
 }
+
 +(BOOL)canInitWithRequest:(NSURLRequest *)request{
     if ([NSURLProtocol propertyForKey:protocolKey inRequest:request]) {
         return NO;
     }
     NSString * url = request.URL.absoluteString;
-    return [self isUrl:url];
+    return [self isUrl:url] && [ZXURLProtocol sharedInstance].requestBlock;
 }
+
 +(NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
     return [[ZXURLProtocol sharedInstance] requestBlockForRequst:request];
 }
--(NSURLRequest *)requestBlockForRequst:(NSURLRequest *)request{
-    NSURLRequest *currentRequest = self.requestBlock ? self.requestBlock(request) : request;
-    return currentRequest;
-}
+
 -(void)startLoading{
     NSMutableURLRequest *request = [self.request mutableCopy];
     [NSURLProtocol setProperty:@(YES) forKey:protocolKey inRequest:request];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    self.session = [ZXURLProtocol sharedInstance].sessionBlock ? [ZXURLProtocol sharedInstance].sessionBlock(session) : session;
     NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request];
     [task resume];
 }
@@ -77,9 +77,16 @@
  completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler{
     completionHandler(proposedResponse);
 }
+
+#pragma mark private
 +(BOOL)isUrl:(NSString *)url{
     NSString *regex =@"[a-zA-z]+://[^\\s]*";
     NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     return [urlTest evaluateWithObject:url];
+}
+
+-(NSURLRequest *)requestBlockForRequst:(NSURLRequest *)request{
+    NSURLRequest *currentRequest = self.requestBlock ? self.requestBlock(request) : request;
+    return currentRequest;
 }
 @end

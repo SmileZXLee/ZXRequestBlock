@@ -5,7 +5,7 @@
 //  Created by 李兆祥 on 2018/8/25.
 //  Copyright © 2018年 李兆祥. All rights reserved.
 //  https://github.com/SmileZXLee/ZXRequestBlock
-//  V1.0.3
+//  V1.0.4
 
 #import "ZXRequestBlock.h"
 #import <objc/runtime.h>
@@ -27,6 +27,9 @@ static BOOL isEnableHttpDns;
     [self handleRequest:requestBlock responseBlock:nil];
 }
 +(void)handleRequest:(requestBlock)requestBlock responseBlock:(responseBlock)responseBlock{
+    [self handleRequest:requestBlock responseBlock:responseBlock sessionBlock:nil];
+}
++(void)handleRequest:(requestBlock)requestBlock responseBlock:(responseBlock)responseBlock sessionBlock:(sessionBlock)sessionBlock {
     ZXURLProtocol *urlProtocol = [ZXURLProtocol sharedInstance];
     NSAssert(!urlProtocol.requestBlock, @"您已添加过handleRequest，再次添加会导致之前代码设置的handleRequest失效，请更改设计策略，在同一个handleRequestBlock作统一处理！");
     [self addRequestBlock];
@@ -48,6 +51,7 @@ static BOOL isEnableHttpDns;
         return newRequest;
     };
     urlProtocol.responseBlock = responseBlock;
+    urlProtocol.sessionBlock = sessionBlock;
 }
 +(void)disableRequestWithUrlStr:(NSString *)urlStr{
     [self handleRequest:^NSURLRequest *(NSURLRequest *request) {

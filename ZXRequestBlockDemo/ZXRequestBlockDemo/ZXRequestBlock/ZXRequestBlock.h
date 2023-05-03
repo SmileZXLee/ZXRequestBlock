@@ -5,11 +5,12 @@
 //  Created by 李兆祥 on 2018/8/25.
 //  Copyright © 2018年 李兆祥. All rights reserved.
 //  https://github.com/SmileZXLee/ZXRequestBlock
-//  V1.0.3
+//  V1.0.4
 
 #import <Foundation/Foundation.h>
 typedef NSURLRequest *(^requestBlock) (NSURLRequest *request);
 typedef NSData *(^responseBlock) (NSURLResponse *response, NSData *data);
+typedef NSURLSession *(^sessionBlock) (NSURLSession *session);
 @interface ZXRequestBlock : NSObject
 @property (nonatomic, copy) NSURLRequest *(^requestBlock)(NSURLRequest *request);
 
@@ -39,6 +40,16 @@ typedef NSData *(^responseBlock) (NSURLResponse *response, NSData *data);
  @param responseBlock 响应回调，responseBlock返回修改后响应的NSData数据
  */
 +(void)handleRequest:(requestBlock)requestBlock responseBlock:(responseBlock)responseBlock;
+
+
+/**
+ 拦截全局请求、响应及NSURLSession
+
+ @param requestBlock 请求回调，requestBlock返回修改后的请求
+ @param responseBlock 响应回调，responseBlock返回修改后响应的NSData数据
+ @param sessionBlock NSURLSession回调，sessionBlock返回修改后的NSURLSession数据
+ */
++(void)handleRequest:(requestBlock)requestBlock responseBlock:(responseBlock)responseBlock sessionBlock:(sessionBlock)sessionBlock;
 
 /**
  启用HttpDns
